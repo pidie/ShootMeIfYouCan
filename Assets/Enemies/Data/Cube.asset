@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2ca65a69104776993a0824c77c31e4, type: 3}
+  m_Name: Cube
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 0}
+  projectileSound: {fileID: 0}
+  scoreValue: 0
+  notes: 'Start appearing after 5 minutes
+
+
+    Cubes have two firing modes:
+
+
+    Default:
+    Laser Cannon. moderate cooldown but high damage and can push target back a bit
+
+
+    High
+    Intensity: Cube spins, firing  three shots from each of its corners. Lower accuracy,
+    but still same damage. Cube needs a long cooldown before it can fire again after
+    using this attack. Cannot move on cooldown.'
+  primaryDamage: 0
+  primaryWeaponRange: 0
+  primaryWeaponCooldown: 0
+  secondaryDamage: 0
+  secondaryWeaponRange: 0
+  secondaryWeaponCooldown: 0
+  health: 0
+  combatHealthRegeneration: 0
+  outOfCombatHealthRegeneration: 0
+  armor: 0
+  armorRegeneration: 0
+  shield: 0
+  shieldRegeneration: 0
+  movementSpeed: 0

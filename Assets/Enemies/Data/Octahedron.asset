@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2ca65a69104776993a0824c77c31e4, type: 3}
+  m_Name: Octahedron
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 0}
+  projectileSound: {fileID: 0}
+  scoreValue: 0
+  notes: 'Come into play after 30 minutes. Only one in game at a time.
+
+
+    Has
+    a high shield and armor. Each face is a different color. crushing all 8 faces
+    will make it glow white, causing it''s second attack.
+
+
+    Primary: Spawn a
+    sphere of a random color.
+
+
+    Secondary: Create a wide beam for a few seconds
+    dealing massive damage. Has to recharge for a few seconds.'
+  primaryDamage: 0
+  primaryWeaponRange: 0
+  primaryWeaponCooldown: 5
+  secondaryDamage: 9
+  secondaryWeaponRange: 0
+  secondaryWeaponCooldown: 20
+  health: 2000
+  combatHealthRegeneration: 0
+  outOfCombatHealthRegeneration: 0
+  armor: 1000
+  armorRegeneration: 0
+  shield: 400
+  shieldRegeneration: 15
+  movementSpeed: 12
