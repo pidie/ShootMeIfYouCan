@@ -51,8 +51,7 @@ namespace Guns
 			var enemy = damageable.GetComponent<Enemy>();
 			if (enemy)
 			{
-				if (!FiredByPlayer || _color != enemy.Color)
-					Destroy(gameObject);
+				if (!FiredByPlayer || _color != enemy.Color) { }
 				else
 				{
 					var detector = enemy.GetComponentInChildren<EnemyDetection>();
@@ -61,11 +60,11 @@ namespace Guns
 
 					if (FiredByPlayer)
 						AccuracyManager.onUpdateAccuracy(true);
+					
+					damageable.TakeDamage(_damage, _point, _normal);
 				}
+				Destroy(gameObject);
 			}
-		
-			damageable.TakeDamage(_damage, _point, _normal);
-			Destroy(gameObject);
 		}
 
 		public void SetIsPlayer() => FiredByPlayer = true;
