@@ -91,6 +91,7 @@ namespace Guns
             {
                 StopAllCoroutines();
                 StartCoroutine(FlashPlayerHurt());
+                print($"health: {CurrentHealth}");
             }
 
             AudioManager.instance.PlayOneShot(hitSoundEffect);

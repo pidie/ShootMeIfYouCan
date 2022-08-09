@@ -9,19 +9,13 @@ namespace Enemies.Behaviors
 {
     public class SphereBehavior : Enemy
     {
-        [Header("Bobbing")]
-        [SerializeField] private float bobbingDistance;
-        [SerializeField] private float bobbingSpeed;
-
         private bool _canFire;
         private bool _isHunting;
-        private Vector3 _restPosition;
 
         protected override void Awake()
         {
             base.Awake();
             _canFire = true;
-            _restPosition = transform.position;
         }
 
         protected override void Update()
@@ -35,9 +29,6 @@ namespace Enemies.Behaviors
             }
 
             var pos = transform.position;
-
-            // transform.position = new Vector3(
-            //     pos.x, _restPosition.y + (float) Math.Sin(Time.time * bobbingSpeed) * bobbingDistance, pos.z);
 
             if (detector.IsPlayerDetected)
             {

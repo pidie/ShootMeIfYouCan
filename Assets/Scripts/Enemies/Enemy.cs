@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using Enemies.Behaviors;
+﻿using Enemies.Behaviors;
 using Guns;
 using Managers;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Enemies
@@ -65,19 +62,6 @@ namespace Enemies
 			transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.transform.position, movementSpeed * Time.deltaTime);
 		}
 
-		protected void OnDestroy()
-		{
-			// ScoreManager.onScoreUpdate(scoreValue, true);
-			//
-			// // todo : make this all happen with one Action
-			// KillCounter.onKillCountUpdate.Invoke();
-			// GameManager.onEnemyKill.Invoke();
-			// AccuracyManager.onIncreaseCombo.Invoke();
-			//
-			// var killCountCanvas = Instantiate(killCountEffect, transform.position, quaternion.identity);
-			// Destroy(killCountCanvas, 1f);
-		}
-
 		public int GetScoreValue() => scoreValue;
 
 		public GameObject GetKillCountEffect() => killCountEffect;
@@ -106,8 +90,7 @@ namespace Enemies
 			{
 				if (i == 0)
 					waypointsVisited[i] = waypoint;
-				else if (waypointsVisited[i - 1] == null)
-					continue;
+				else if (waypointsVisited[i - 1] == null) { }
 				else
 					waypointsVisited[i] = waypointsVisited[i - 1];
 
