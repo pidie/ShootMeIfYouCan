@@ -57,12 +57,13 @@ namespace Guns
 					var detector = enemy.GetComponentInChildren<EnemyDetection>();
 					if (detector)
 						detector.PlayerDetected(_initialPosition);
-
-					if (FiredByPlayer)
-						AccuracyManager.onUpdateAccuracy(true);
 					
 					damageable.TakeDamage(_damage, _point, _normal);
 				}
+				
+				if (FiredByPlayer)
+					AccuracyManager.onUpdateAccuracy(true);
+				
 				Destroy(gameObject);
 			}
 
