@@ -14,10 +14,8 @@ namespace Managers
         [SerializeField] private Enemy[] enemies;
         [SerializeField] private Spawner[] spawners;
         [SerializeField] private GameObject gameOverMenu;
-        [SerializeField] private Texture2D cursorImage;
 
         private static Color _targetColor;
-        private bool _changeColor;
         private bool _canSpawn;
         private int _colorPoolSize;
         private int _activeEnemyCount;
@@ -27,8 +25,11 @@ namespace Managers
         private bool _waitingToAddNewColor;
         private int _increaseStatCounter;
         private int _increaseEnemiesCounter;
+        private static float _changeGunColorChance;
+        private static float _changeGunColorIncrement;
 
         private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+        private static Action _onChangeColor;
 
         public static Action onEnemyKill;
         public static Action onPlayerKill;
@@ -41,11 +42,13 @@ namespace Managers
             Cursor.visible = false;
 
             _targetColor = Color.white;
-            _changeColor = true;
+            // _changeColor = true;
             _canSpawn = true;
             _colorPoolSize = 2;
             _activeEnemyCount = 0;
             _maxEnemies = 10;
+            _changeGunColorChance = 0.015f;
+            _changeGunColorIncrement = 0.0005f;
 
             EnemyHealthBonus = 1;
             EnemyDamageBonus = 1;
@@ -53,6 +56,7 @@ namespace Managers
             spawners = FindObjectsOfType<Spawner>();
 
             StartCoroutine(AddNewColor());
+            ChangeColor();
         }
 
         private void Update()
@@ -65,12 +69,6 @@ namespace Managers
 
             if (!_waitingToAddNewColor)
                 StartCoroutine(AddNewColor());
-        
-            if (_changeColor)
-            {
-                _changeColor = false;
-                ChangeColor();
-            }
 
             if (_canSpawn)
                 StartCoroutine(SpawnEnemy());
@@ -80,6 +78,7 @@ namespace Managers
         {
             onEnemyKill += DecrementActiveEnemyCount;
             onPlayerKill += GameOver;
+            _onChangeColor += ChangeColor;
         }
 
         private void OnDisable()
@@ -109,14 +108,23 @@ namespace Managers
 
             gunMaterial.SetColor(EmissionColor, _targetColor);
             BatteryLevel.onUpdateColor(_targetColor);
-
-            StartCoroutine(ChangeColorDelay());
         }
 
-        private IEnumerator ChangeColorDelay()
+        public static bool CheckChangeGunColor()
         {
-            yield return new WaitForSeconds(20f);
-            _changeColor = true;
+            var chanceQuantified = Random.Range(0f, 1f);
+            var chance = chanceQuantified < _changeGunColorChance;
+            
+            if (chance == false)
+                _changeGunColorChance += _changeGunColorIncrement;
+            else
+            {
+                _changeGunColorChance = 0.015f;
+                _changeGunColorIncrement += 0.000018f;
+                _onChangeColor.Invoke();
+            }
+            
+            return chance;
         }
 
         private IEnumerator SpawnEnemy()
@@ -177,12 +185,6 @@ namespace Managers
     
         private void IncrementActiveEnemyCount() => _activeEnemyCount++;
 
-        private void DecrementActiveEnemyCount()
-        {
-            _activeEnemyCount--;
-        
-            if (_canSpawn == false)
-                _canSpawn = true;
-        }
+        private void DecrementActiveEnemyCount() => _activeEnemyCount--;
     }
 }

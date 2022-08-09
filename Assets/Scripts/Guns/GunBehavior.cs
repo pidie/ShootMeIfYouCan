@@ -116,7 +116,9 @@ namespace Guns
             AudioManager.instance.PlayOneShot(weaponFireSound);
         
             Destroy(projectile, 2f);
+            GameManager.CheckChangeGunColor();
 
+            // battery stuff
             _currentCharge -= chargeCost;
             if (_currentCharge < 0)
                 _currentCharge = 0;
