@@ -791,11 +791,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 1
-  cloudProjectId: 
+  cloudProjectId: 55f6c783-9c60-442c-b14d-26a60056e496
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: EffectsExamples
-  organizationId: 
+  projectName: Shoot Me If You Can
+  organizationId: pidiegames
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 1
   playerDataPath: 
