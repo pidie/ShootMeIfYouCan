@@ -13,7 +13,7 @@ namespace Guns
 
 		private Vector3 _initialPosition;
 
-		public bool FiredByPlayer { get; private set; }			// true if the shot was fired by the player
+		public bool FiredByPlayer { get; private set; }		// true if the shot was fired by the player
 		public GameObject Shooter { get; private set; }		// used to prevent enemies from shooting themselves
 
 		public void SetValues(float damage, Vector3 point, Vector3 normal, float range, Color color)
@@ -65,6 +65,11 @@ namespace Guns
 				}
 				Destroy(gameObject);
 			}
+
+			// player takes damage
+			var player = damageable.GetComponent<PlayerMovement>();
+			if (!FiredByPlayer && player)
+				damageable.TakeDamage(_damage, _point, _normal);
 		}
 
 		public void SetIsPlayer() => FiredByPlayer = true;
