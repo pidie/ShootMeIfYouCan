@@ -532,8 +532,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: X
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1cf782f9a229e3847adf0e5cb7c1bdf3, type: 2}
-  m_sharedMaterial: {fileID: 3967717013445116716, guid: 1cf782f9a229e3847adf0e5cb7c1bdf3,
+  m_fontAsset: {fileID: 11400000, guid: 79d3d6d22e1dd4743be0566592d538fe, type: 2}
+  m_sharedMaterial: {fileID: 7174992045460417552, guid: 79d3d6d22e1dd4743be0566592d538fe,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -973,7 +973,19 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '-Added a Version Notes section to the main menu
+  m_text: '-Changed Version Notes font for ease of readability
+
+    -Fixed issue
+    where shooting an inactive colored enemy would not update player accuracy
+
+
+    _____________________________________________________
+
+    pre-alpha
+    v0.0.2
+
+
+    -Added a Version Notes section to the main menu
 
     -Added a version
     number label to the main menu
@@ -989,26 +1001,26 @@ MonoBehaviour:
     -Fixed issue where enemies would
     spawn in as soon as one was killed
 
-    -<color=#00ffffff><b>Changed mechanic</b><color="white">:
+    -<color=#00ffffff>Changed mechanic<color="white">:
     The gun now has a chance to change color after every shot fired instead of at
-    a fixed rate.The chance increase per shot gets bigger every time the gun changes
+    a fixed rate. The chance increase per shot gets bigger every time the gun changes
     color.
 
 
-    start chance: <color="green">                 1.5%<color="white">
+    start chance: <color="green">                   1.5%<color="white">
 
     chance
     increase per shot: <color="green">      +0.05% <color="white">
 
     increment
-    increase per change: <color="green">  +0.0018% <color="white">
+    increase per change: <color="green"> +0.0018% <color="white">
 
 
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ea8738039e0c0f94780facccb896695c, type: 2}
-  m_sharedMaterial: {fileID: 3493963467706106254, guid: ea8738039e0c0f94780facccb896695c,
+  m_fontAsset: {fileID: 11400000, guid: 79d3d6d22e1dd4743be0566592d538fe, type: 2}
+  m_sharedMaterial: {fileID: 7174992045460417552, guid: 79d3d6d22e1dd4743be0566592d538fe,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1033,13 +1045,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33
+  m_fontSize: 24
   m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 28
-  m_fontSizeMax: 33
-  m_fontStyle: 32
+  m_fontSizeMin: 20
+  m_fontSizeMax: 24
+  m_fontStyle: 0
   m_HorizontalAlignment: 8
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -1542,7 +1554,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: pre-alpha v0.0.2
+  m_text: pre-alpha v0.0.3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ea8738039e0c0f94780facccb896695c, type: 2}
   m_sharedMaterial: {fileID: 3493963467706106254, guid: ea8738039e0c0f94780facccb896695c,
@@ -3233,7 +3245,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Version Notes - pre-alpha v0.0.2
+  m_text: Version Notes - pre-alpha v0.0.3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ea8738039e0c0f94780facccb896695c, type: 2}
   m_sharedMaterial: {fileID: 3493963467706106254, guid: ea8738039e0c0f94780facccb896695c,
