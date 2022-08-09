@@ -28,6 +28,7 @@ namespace Guns
         private Image _playerHurtUIImage;
         private int _timesShot;
         private bool _isPlayer;
+        private bool _showingPlayerHurt;
 
         public float CurrentHealth { get; private set; }
 
@@ -87,9 +88,8 @@ namespace Guns
                 Destroy(_activeHitEffect, 1);
             }
 
-            if (_isPlayer)
+            if (_isPlayer && _showingPlayerHurt == false)
             {
-                StopAllCoroutines();
                 StartCoroutine(FlashPlayerHurt());
                 print($"health: {CurrentHealth}");
             }
@@ -134,10 +134,13 @@ namespace Guns
 
         private IEnumerator FlashPlayerHurt()
         {
-            var color = _playerHurtUIImage.color;
-            _playerHurtUIImage.color = new Color(color.r, color.g, color.b, 1);
+            _showingPlayerHurt = true;
+            var colorNoAlpha = _playerHurtUIImage.color;
+            var colorAlpha = new Color(colorNoAlpha.r, colorNoAlpha.g, colorNoAlpha.b, 1);
+            _playerHurtUIImage.color = colorAlpha;
             yield return new WaitForSeconds(0.1f);
-            _playerHurtUIImage.color = color;
+            _playerHurtUIImage.color = colorNoAlpha;
+            _showingPlayerHurt = false;
         }
     }
 }

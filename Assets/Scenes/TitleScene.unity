@@ -981,6 +981,9 @@ MonoBehaviour:
     -Added
     personal opening splash icon
 
+    -Fixed issue where on-screen damage effect
+    would persist indefinitely
+
 
     _____________________________________________________
 
