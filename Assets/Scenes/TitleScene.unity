@@ -978,6 +978,9 @@ MonoBehaviour:
     -Fixed issue
     where shooting an inactive colored enemy would not update player accuracy
 
+    -Added
+    personal opening splash icon
+
 
     _____________________________________________________
 
