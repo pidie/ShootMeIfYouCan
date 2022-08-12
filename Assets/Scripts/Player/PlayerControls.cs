@@ -62,6 +62,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuScreen"",
+                    ""type"": ""Button"",
+                    ""id"": ""fcddafb7-f9da-4d25-95c1-6c295b94cbc8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -262,6 +271,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca694df1-9e65-4126-a9bc-2947723b9529"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuScreen"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -274,6 +294,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_PlayerGeneric_Jump = m_PlayerGeneric.FindAction("Jump", throwIfNotFound: true);
         m_PlayerGeneric_Look = m_PlayerGeneric.FindAction("Look", throwIfNotFound: true);
         m_PlayerGeneric_Fire = m_PlayerGeneric.FindAction("Fire", throwIfNotFound: true);
+        m_PlayerGeneric_MenuScreen = m_PlayerGeneric.FindAction("MenuScreen", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -337,6 +358,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerGeneric_Jump;
     private readonly InputAction m_PlayerGeneric_Look;
     private readonly InputAction m_PlayerGeneric_Fire;
+    private readonly InputAction m_PlayerGeneric_MenuScreen;
     public struct PlayerGenericActions
     {
         private @PlayerControls m_Wrapper;
@@ -345,6 +367,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_PlayerGeneric_Jump;
         public InputAction @Look => m_Wrapper.m_PlayerGeneric_Look;
         public InputAction @Fire => m_Wrapper.m_PlayerGeneric_Fire;
+        public InputAction @MenuScreen => m_Wrapper.m_PlayerGeneric_MenuScreen;
         public InputActionMap Get() { return m_Wrapper.m_PlayerGeneric; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -366,6 +389,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Fire.started -= m_Wrapper.m_PlayerGenericActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_PlayerGenericActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_PlayerGenericActionsCallbackInterface.OnFire;
+                @MenuScreen.started -= m_Wrapper.m_PlayerGenericActionsCallbackInterface.OnMenuScreen;
+                @MenuScreen.performed -= m_Wrapper.m_PlayerGenericActionsCallbackInterface.OnMenuScreen;
+                @MenuScreen.canceled -= m_Wrapper.m_PlayerGenericActionsCallbackInterface.OnMenuScreen;
             }
             m_Wrapper.m_PlayerGenericActionsCallbackInterface = instance;
             if (instance != null)
@@ -382,6 +408,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
+                @MenuScreen.started += instance.OnMenuScreen;
+                @MenuScreen.performed += instance.OnMenuScreen;
+                @MenuScreen.canceled += instance.OnMenuScreen;
             }
         }
     }
@@ -392,5 +421,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
+        void OnMenuScreen(InputAction.CallbackContext context);
     }
 }
