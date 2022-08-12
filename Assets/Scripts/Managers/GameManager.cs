@@ -16,19 +16,23 @@ namespace Managers
         [SerializeField] private GameObject gameOverMenu;
 
         private static Color _targetColor;
+        private static float _changeGunColorChance;
+        private static float _changeGunColorIncrement;
+        private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+        
+        // coroutine flags
         private bool _canSpawn;
+        private bool _waitingToAddNewColor;
+        private bool _waitingToIncreaseEnemyStats;
+        private bool _waitingToIncreaseMaxEnemies;
+
+        // values to track
         private int _colorPoolSize;
         private int _activeEnemyCount;
         private int _maxEnemies;
-        private bool _waitingToIncreaseEnemyStats;
-        private bool _waitingToIncreaseMaxEnemies;
-        private bool _waitingToAddNewColor;
         private int _increaseStatCounter;
         private int _increaseEnemiesCounter;
-        private static float _changeGunColorChance;
-        private static float _changeGunColorIncrement;
 
-        private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
         private static Action _onChangeColor;
 
         public static Action onEnemyKill;
@@ -42,7 +46,6 @@ namespace Managers
             Cursor.visible = false;
 
             _targetColor = Color.white;
-            // _changeColor = true;
             _canSpawn = true;
             _colorPoolSize = 2;
             _activeEnemyCount = 0;
@@ -61,17 +64,17 @@ namespace Managers
 
         private void Update()
         {
+            if (_canSpawn)
+                StartCoroutine(SpawnEnemy());
+
+            if (!_waitingToAddNewColor)
+                StartCoroutine(AddNewColor());
+            
             if (!_waitingToIncreaseEnemyStats)
                 StartCoroutine(IncreaseEnemyStatBonus());
 
             if (!_waitingToIncreaseMaxEnemies)
                 StartCoroutine(IncreaseMaxEnemies());
-
-            if (!_waitingToAddNewColor)
-                StartCoroutine(AddNewColor());
-
-            if (_canSpawn)
-                StartCoroutine(SpawnEnemy());
         }
 
         private void OnEnable()
@@ -85,6 +88,7 @@ namespace Managers
         {
             onEnemyKill -= DecrementActiveEnemyCount;
             onPlayerKill -= GameOver;
+            _onChangeColor -= ChangeColor;
         }
 
         private void GameOver()

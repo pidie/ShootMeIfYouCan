@@ -1,4 +1,5 @@
 ﻿using Enemies;
+using Player;
 using UnityEngine;
 
 namespace Guns

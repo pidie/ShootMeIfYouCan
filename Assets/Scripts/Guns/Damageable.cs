@@ -1,6 +1,7 @@
 using System.Collections;
 using Enemies;
 using Managers;
+using Player;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -91,7 +92,7 @@ namespace Guns
             if (_isPlayer && _showingPlayerHurt == false)
             {
                 StartCoroutine(FlashPlayerHurt());
-                print($"health: {CurrentHealth}");
+                Debug.Log($"health: {CurrentHealth}");
             }
 
             AudioManager.instance.PlayOneShot(hitSoundEffect);
