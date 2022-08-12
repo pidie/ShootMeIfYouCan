@@ -60,18 +60,18 @@ namespace Guns
 						detector.PlayerDetected(_initialPosition);
 					
 					damageable.TakeDamage(_damage, _point, _normal);
+					
+					if (FiredByPlayer)
+						AccuracyManager.onUpdateAccuracy(true);
 				}
-				
-				if (FiredByPlayer)
-					AccuracyManager.onUpdateAccuracy(true);
-				
-				Destroy(gameObject);
 			}
 
 			// player takes damage
 			var player = damageable.GetComponent<PlayerMovement>();
 			if (!FiredByPlayer && player)
 				damageable.TakeDamage(_damage, _point, _normal);
+			
+			Destroy(gameObject);
 		}
 
 		public void SetIsPlayer() => FiredByPlayer = true;
