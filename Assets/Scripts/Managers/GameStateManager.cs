@@ -1,6 +1,5 @@
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Managers
 {
@@ -10,7 +9,9 @@ namespace Managers
 	 
 	    private void Awake() => Cursor.SetCursor(cursorImage, Vector2.zero, CursorMode.Auto);
 
-	    public void Retry() => SceneManager.LoadScene(1);
+	    public void Retry() => SceneLoader.Load(SceneLoader.Scene.TestLevel);
+
+	    public void ToTitleScreen() => SceneLoader.Load(SceneLoader.Scene.TitleScene);
 
 	    public void Quit()
         {
