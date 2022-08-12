@@ -8,9 +8,23 @@ namespace Managers
     {
         private readonly Stopwatch _timer = new ();
 
-        public TimeSpan GetTimeElapsed => _timer.Elapsed;
+        private TimeSpan _timeElapsedSinceLastFrame;
+        
+        public TimeSpan GetTimeElapsed { get; private set; }
 
-        private void Awake() => _timer.Start();
+        public static Action<float> onTimeScaleChange;
+
+        private void Awake()
+        {
+            onTimeScaleChange += ChangeTimeScale;
+            _timer.Start();
+        }
+
+        private void Update()
+        {
+            GetTimeElapsed += (_timer.Elapsed - _timeElapsedSinceLastFrame) * Time.timeScale;
+            _timeElapsedSinceLastFrame = _timer.Elapsed;
+        }
 
         private void OnEnable() => GameManager.onPlayerKill += OnPlayerDeath;
 
@@ -18,10 +32,13 @@ namespace Managers
 
         private void OnPlayerDeath() => _timer.Stop();
 
-        private void OnDestroy()
+        private void OnDestroy() => _timer.Stop();
+
+        private void ChangeTimeScale(float value)
         {
-            // todo : this will have to stop at the end of a level
-            _timer.Stop();
+            Time.timeScale = value;
+            _timer.Restart();
+            _timeElapsedSinceLastFrame = new TimeSpan();
         }
     }
 }
