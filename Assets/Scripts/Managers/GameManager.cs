@@ -11,7 +11,9 @@ namespace Managers
     {
         [SerializeField] private Color[] colors;
         [SerializeField] private Material gunMaterial;
-        [SerializeField] private Enemy[] enemies;
+        [SerializeField] private Enemy[] spheres;
+        [SerializeField] private Enemy[] cubes;
+        [SerializeField] private Enemy[] tetrahedrons;
         [SerializeField] private Spawner[] spawners;
         [SerializeField] private GameObject gameOverMenu;
 
@@ -19,9 +21,12 @@ namespace Managers
         private static float _changeGunColorChance;
         private static float _changeGunColorIncrement;
         private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
-        
+
+        private Enemy[][] _allEnemies;
+
         // coroutine flags
         private bool _canSpawn;
+        private bool _readyToSpawn;
         private bool _waitingToAddNewColor;
         private bool _waitingToIncreaseEnemyStats;
         private bool _waitingToIncreaseMaxEnemies;
@@ -45,6 +50,8 @@ namespace Managers
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
+            _allEnemies = new [] { spheres, cubes, tetrahedrons };
+
             _targetColor = Color.white;
             _canSpawn = true;
             _colorPoolSize = 2;
@@ -64,7 +71,7 @@ namespace Managers
 
         private void Update()
         {
-            if (_canSpawn)
+            if (_canSpawn && _activeEnemyCount < _maxEnemies)
                 StartCoroutine(SpawnEnemy());
 
             if (!_waitingToAddNewColor)
@@ -135,17 +142,21 @@ namespace Managers
         {
             _canSpawn = false;
             var spawner = spawners[Random.Range(0, spawners.Length)];
-            var enemy = enemies[Random.Range(0, _colorPoolSize)];
+            var enemyType = _allEnemies[Random.Range(0, 3)];
+            
+            // lock enemy type to spheres
+            enemyType = _allEnemies[0];
+            
+            var enemy = enemyType[Random.Range(0, _colorPoolSize)];
             spawner.SpawnEnemy(enemy);
             IncrementActiveEnemyCount();
         
-            if (_activeEnemyCount >= _maxEnemies) 
-                yield return null;
+            yield return new WaitForSeconds(5);
+
+            if (_activeEnemyCount >= _maxEnemies)
+                _readyToSpawn = true;
             else
-            {
-                yield return new WaitForSeconds(5);
                 _canSpawn = true;
-            }
         }
 
         private IEnumerator AddNewColor()
@@ -189,6 +200,15 @@ namespace Managers
     
         private void IncrementActiveEnemyCount() => _activeEnemyCount++;
 
-        private void DecrementActiveEnemyCount() => _activeEnemyCount--;
+        private void DecrementActiveEnemyCount()
+        {
+            _activeEnemyCount--;
+
+            if (_readyToSpawn)
+            {
+                _readyToSpawn = false;
+                _canSpawn = true;
+            }
+        }
     }
 }
