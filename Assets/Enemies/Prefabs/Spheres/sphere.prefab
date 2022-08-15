@@ -207,24 +207,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f6e36eee30aa24eac7f9bdbbdd6198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 136330, guid: e71b214acaf26b04c9dc9789b4f3cac1, type: 3}
-  weaponFireSound: {fileID: 8300000, guid: e2a476a46490eb54aa42151647b4fa8d, type: 3}
   detector: {fileID: 3605632158808249916}
   scoreValue: 500
   damageable: {fileID: 2336347975668646732}
   killCountEffect: {fileID: 6486282083482794712, guid: 4ba5a7cd22ed3ba40919bf3da42da628,
     type: 3}
-  damage: 3
+  globalDamageBonus: 1
+  globalHealthBonus: 1
+  primaryDamage:
+    min: 3
+    max: 3
+  primaryDamageBonus: 1
   range: 25
-  weaponCooldown: 1
+  primaryCooldown: 1
+  primaryProjectile: {fileID: 7997029315607958557, guid: 98dc8c569511ca143925284e598000c0,
+    type: 3}
+  primaryWeaponFireSound: {fileID: 8300000, guid: e2a476a46490eb54aa42151647b4fa8d,
+    type: 3}
+  secondaryDamage:
+    min: 10
+    max: 12
+  secondaryDamageBonus: 1
+  secondaryRange: 5
+  secondaryCooldown: 2
+  secondaryProjectile: {fileID: 0}
+  secondaryWeaponFireSound: {fileID: 0}
   health: 10
   armor: 0
   shield: 0
   passiveHealthRegen: 1.5
   passiveHealthBonus: 0
   movementSpeed: 5
-  bobbingDistance: 0.2
-  bobbingSpeed: 1.5
+  targetWaypoint: {fileID: 0}
+  waypointsInRange: []
+  waypointsVisited:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  state: 0
 --- !u!114 &2336347975668646732
 MonoBehaviour:
   m_ObjectHideFlags: 0

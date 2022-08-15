@@ -14,6 +14,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8211474983832869854, guid: b507478fd1bf81a4f9f4ae880247a814,
         type: 3}
+    - target: {fileID: -4911188409741794328, guid: 5770234c51689334f9a94746a6cd6b7b,
+        type: 3}
+      propertyPath: primaryProjectile
+      value: 
+      objectReference: {fileID: 8211474983832869854, guid: b507478fd1bf81a4f9f4ae880247a814,
+        type: 3}
     - target: {fileID: -3168615736109225433, guid: 5770234c51689334f9a94746a6cd6b7b,
         type: 3}
       propertyPath: projectilePrefab

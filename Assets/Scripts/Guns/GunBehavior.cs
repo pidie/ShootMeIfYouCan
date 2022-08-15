@@ -109,7 +109,7 @@ namespace Guns
                     projectile.transform.LookAt(hit.point);
                     var p = projectile.GetComponent<Projectile>();
                     p.SetIsPlayer();
-                    p.SetValues(Damage(damageModifier), hit.point, hit.normal, range, GameManager.GetColor());
+                    p.SetValues(Extensions.Damage(damageRange, damageModifier), hit.point, hit.normal, range, GameManager.GetColor());
                     break;
                 }
             }
@@ -129,9 +129,7 @@ namespace Guns
                 StartCoroutine(RechargeWeapon());
             }
         }
-
-        private float Damage(float modifier) => Random.Range(damageRange.Min, damageRange.Max) * modifier;
-
+        
         private IEnumerator WaitToFire(float timeToWait)
         {
             yield return new WaitForSeconds(timeToWait);

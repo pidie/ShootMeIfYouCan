@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Net;
 using Guns;
 using Managers;
 using Unity.Mathematics;
@@ -9,66 +10,89 @@ namespace Enemies.Behaviors
 {
     public class SphereBehavior : Enemy
     {
-        private bool _canFire;
-        private bool _isHunting;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            _canFire = true;
-        }
-
         protected override void Update()
         {
             base.Update();
-            
-            if (_canFire && detector.Distance(transform) <= range)
-            {
-                _canFire = false;
-                Fire();
-            }
 
             var pos = transform.position;
 
-            if (detector.IsPlayerDetected)
-            {
-                _isHunting = false;
-                transform.LookAt(detector.Target);
-                transform.position += transform.forward * (movementSpeed * Time.deltaTime);
-            }
+            if (state == EnemyState.Attack) { }
+            else if (detector.IsPlayerDetected)
+                state = EnemyState.Hunting;
             else if (detector.PlayerDetectedFromPoint != Vector3.zero)
+                state = EnemyState.Searching;
+            else
+                state = EnemyState.Patrolling;
+
+            switch (state)
             {
-                _isHunting = true;
-                transform.LookAt(detector.PlayerDetectedFromPoint);
-                transform.position += transform.forward * (movementSpeed * Time.deltaTime);
-
-                var tx = (float) Math.Round(pos.x, 2);
-                var tz = (float) Math.Round(pos.z, 2);
-                var dx = (float) Math.Round(detector.PlayerDetectedFromPoint.x, 2);
-                var dz = (float) Math.Round(detector.PlayerDetectedFromPoint.z, 2);
-
-                if (tx == dx && tz == dz && _isHunting)
+                case EnemyState.Idle:
                 {
-                    _isHunting = false;
-                    detector.PlayerLost();
+                    // bobbing
+                    break;
                 }
+                case EnemyState.Patrolling:
+                {
+                    // move to waypoint
+                    if (Vector3.Distance(transform.position, targetWaypoint.transform.position) < 0.2f)
+                    {
+                        AddVisitedWaypoint(targetWaypoint);
+                        targetWaypoint.Depart();
+                        var newWaypoint = SetTargetWaypoint(targetWaypoint.GetRandomNeighbor());
+                        newWaypoint.RequestIncoming(waypointsVisited[0]);
+                        transform.LookAt(targetWaypoint.transform);
+                    }
+                    transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.transform.position, movementSpeed * Time.deltaTime);
+
+                    break;
+                }
+                case EnemyState.Searching:
+                {
+                    // move to lastKnownPlayerCoordinate
+                    transform.LookAt(detector.PlayerDetectedFromPoint);
+                    transform.position += transform.forward * (movementSpeed * Time.deltaTime);
+
+                    var tx = (float)Math.Round(pos.x, 2);
+                    var tz = (float)Math.Round(pos.z, 2);
+                    var dx = (float)Math.Round(detector.PlayerDetectedFromPoint.x, 2);
+                    var dz = (float)Math.Round(detector.PlayerDetectedFromPoint.z, 2);
+
+                    if (tx == dx && tz == dz)
+                        detector.PlayerLost();
+                    
+                    break;
+                }
+                case EnemyState.Hunting:
+                {
+                    // track player
+                    transform.LookAt(detector.Target);
+                    transform.position += transform.forward * (movementSpeed * Time.deltaTime);
+
+                    if (canPrimaryAttack && detector.Distance(transform) <= range)
+                        state = EnemyState.Attack;
+                    break;
+                }
+                case EnemyState.Zooming:
+                {
+                    // zoom across map
+                    break;
+                }
+                case EnemyState.Attack:
+                {
+                    // fire a projectile
+                    // todo : determine whether to primary or secondary attack here
+                    canPrimaryAttack = false;
+                    PrimaryAttack();
+                    break;
+                }
+                default:
+                    break;
             }
         }
 
-        private void OnCollisionEnter(Collision collision)
+        protected override void PrimaryAttack()
         {
-            if (collision.collider.CompareTag("Floor"))
-            {
-                var x = transform.localEulerAngles.x;
-                var y = transform.localEulerAngles.y + 90f;
-                var z = transform.localEulerAngles.z;
-                transform.rotation = quaternion.Euler(x, y, z);
-            }
-        }
-
-        private void Fire()
-        {
-            var projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+            var projectile = Instantiate(primaryProjectile, transform.position, transform.rotation);
             projectile.transform.LookAt(detector.Target);
 
             var hits = Physics.RaycastAll(transform.position, transform.forward, range);
@@ -79,19 +103,18 @@ namespace Enemies.Behaviors
                 {
                     projectile.transform.LookAt(hit.point);
                     var p = projectile.GetComponent<Projectile>();
-                    p.SetValues(damage, hit.point, hit.normal, 60, Color);
+                    p.SetValues(Extensions.Damage(primaryDamage, primaryDamageBonus), hit.point, hit.normal, 60, Color);
                     p.SetShooter(gameObject);
                     break;
                 }
             }
-            StartCoroutine(Cooldown());
-            AudioManager.instance.PlayOneShot(weaponFireSound);
+            
+            base.PrimaryAttack();
         }
 
-        private IEnumerator Cooldown()
+        protected override void SecondaryAttack()
         {
-            yield return new WaitForSeconds(weaponCooldown);
-            _canFire = true;
+            base.SecondaryAttack();
         }
     }
 }

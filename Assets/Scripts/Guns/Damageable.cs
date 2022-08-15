@@ -90,10 +90,7 @@ namespace Guns
             }
 
             if (_isPlayer && _showingPlayerHurt == false)
-            {
                 StartCoroutine(FlashPlayerHurt());
-                Debug.Log($"health: {CurrentHealth}");
-            }
 
             AudioManager.instance.PlayOneShot(hitSoundEffect);
 

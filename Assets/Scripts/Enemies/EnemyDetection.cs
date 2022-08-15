@@ -82,7 +82,7 @@ namespace Enemies
             ResetPlayerDetectedFromPoint();
         }
 
-        public float Distance(Transform origin) => Target == null ? 1000f : Vector3.Distance(origin.position, Target.position);
+        public float Distance(Transform origin) => Target == null ? float.PositiveInfinity : Vector3.Distance(origin.position, Target.position);
 
         private void TurnUpEmissions()
         {
