@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-    [CustomEditor(typeof(RampAsset))]
+    [UnityEditor.CustomEditor(typeof(RampAsset))]
     public class RampAssetEditor : Editor
     {
         public override void OnInspectorGUI()

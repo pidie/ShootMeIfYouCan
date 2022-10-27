@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Enemies
 {
-    public class EnemyDetection : MonoBehaviour
+    public class PlayerDetector : MonoBehaviour
     {
         [SerializeField] private MeshRenderer meshRenderer;
         [SerializeField] private float glowLowOpacity = 0.1f;
