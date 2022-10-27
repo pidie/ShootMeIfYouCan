@@ -49,15 +49,17 @@ namespace Guns
 				return;
 
 			// prevent friendly fire
-			var enemy = damageable.GetComponent<Enemy>();
+			var enemy = damageable.GetComponent<EnemyBehavior>();
 			if (enemy)
 			{
-				if (!FiredByPlayer || _color != enemy.Color) { }
+				var detector = enemy.GetComponentInChildren<PlayerDetector>();
+				
+				if (!FiredByPlayer) { }
+				else if (_color != enemy.Color)
+					detector.PlayerDetected(_initialPosition);
 				else
 				{
-					var detector = enemy.GetComponentInChildren<EnemyDetection>();
-					if (detector)
-						detector.PlayerDetected(_initialPosition);
+					detector.PlayerDetected(_initialPosition);
 					
 					damageable.TakeDamage(_damage, _point, _normal);
 					

@@ -11,9 +11,9 @@ namespace Managers
     {
         [SerializeField] private Color[] colors;
         [SerializeField] private Material gunMaterial;
-        [SerializeField] private Enemy[] spheres;
-        [SerializeField] private Enemy[] cubes;
-        [SerializeField] private Enemy[] tetrahedrons;
+        [SerializeField] private EnemyBehavior[] spheres;
+        [SerializeField] private EnemyBehavior[] cubes;
+        [SerializeField] private EnemyBehavior[] tetrahedrons;
         [SerializeField] private Spawner[] spawners;
         [SerializeField] private GameObject gameOverMenu;
 
@@ -22,7 +22,7 @@ namespace Managers
         private static float _changeGunColorIncrement;
         private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
 
-        private Enemy[][] _allEnemies;
+        private EnemyBehavior[][] _allEnemies;
 
         // coroutine flags
         private bool _canSpawn;
@@ -71,7 +71,7 @@ namespace Managers
 
         private void Update()
         {
-            if (_canSpawn && _activeEnemyCount < _maxEnemies)
+            if (_canSpawn || _readyToSpawn && _activeEnemyCount < _maxEnemies)
                 StartCoroutine(SpawnEnemy());
 
             if (!_waitingToAddNewColor)
@@ -141,6 +141,7 @@ namespace Managers
         private IEnumerator SpawnEnemy()
         {
             _canSpawn = false;
+            _readyToSpawn = false;
             var spawner = spawners[Random.Range(0, spawners.Length)];
             var enemyType = _allEnemies[Random.Range(0, 3)];
             
@@ -166,6 +167,7 @@ namespace Managers
         
             _colorPoolSize++;
             _waitingToAddNewColor = false;
+            _increaseEnemiesCounter++;
         }
 
         private IEnumerator IncreaseEnemyStatBonus()

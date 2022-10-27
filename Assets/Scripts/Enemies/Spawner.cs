@@ -1,5 +1,6 @@
 using Enemies.Behaviors;
 using UnityEngine;
+using Waypoints;
 
 namespace Enemies
 {
@@ -11,15 +12,17 @@ namespace Enemies
 
         private void Awake() => spawnWaypoint = GetComponentInChildren<Waypoint>();
 
-        public void SpawnEnemy(Enemy enemy)
+        public void SpawnEnemy(EnemyBehavior enemyBehavior)
         {
             var parent = transform;
             
-            if (enemy.GetType() == typeof(SphereBehavior))
+            if (enemyBehavior.GetType() == typeof(SphereBehavior))
                 parent = GameObject.Find("--- Enemies/Spheres").transform;
 
-            enemy.SetTargetWaypoint(spawnWaypoint);
-            var e = Instantiate(enemy.gameObject, spawnPosition.position, Quaternion.identity, parent);
+            var e = Instantiate(enemyBehavior.gameObject, spawnPosition.position, Quaternion.identity, parent);
+
+            var waypointNav = e.GetComponent<WaypointNavigator>();
+            waypointNav.SetCurrentWaypoint(spawnWaypoint);
         }
     }
 }

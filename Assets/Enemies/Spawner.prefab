@@ -374,6 +374,11 @@ PrefabInstance:
       propertyPath: isStartingNode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2852810367103055851, guid: 3060d6e45c507484d9680a355a40f309,
+        type: 3}
+      propertyPath: neighborCheckDistance
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 3060d6e45c507484d9680a355a40f309, type: 3}

@@ -171,6 +171,8 @@ GameObject:
   - component: {fileID: 2336347975668646723}
   - component: {fileID: 2336347975668646721}
   - component: {fileID: 2336347975668646734}
+  - component: {fileID: 2294937683034386309}
+  - component: {fileID: -179096901357664001}
   m_Layer: 6
   m_Name: sphere
   m_TagString: Untagged
@@ -212,6 +214,10 @@ MonoBehaviour:
   damageable: {fileID: 2336347975668646732}
   killCountEffect: {fileID: 6486282083482794712, guid: 4ba5a7cd22ed3ba40919bf3da42da628,
     type: 3}
+  waypointLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  physicalWidth: 0
   globalDamageBonus: 1
   globalHealthBonus: 1
   primaryDamage:
@@ -238,30 +244,10 @@ MonoBehaviour:
   passiveHealthRegen: 1.5
   passiveHealthBonus: 0
   movementSpeed: 5
-  targetWaypoint: {fileID: 0}
-  waypointsInRange: []
-  waypointsVisited:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  state: 0
+  bobbingHeight: 0.4
+  bobbingSpeed: 1
+  zoomWaypointWaitMinimum: 6
+  zoomChance: 0.15
 --- !u!114 &2336347975668646732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,3 +347,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2294937683034386309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2336347975668646733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64fa6e5c203346e1a9ed8e3d329230ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destination: {x: 0, y: 0, z: 0}
+  stopDistance: 0.2
+  rotationSpeed: 0
+  velocity: {x: 0, y: 0, z: 0}
+  lastPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &-179096901357664001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2336347975668646733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe51306af9094edab71259e72a30ef06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWaypoint: {fileID: 0}
