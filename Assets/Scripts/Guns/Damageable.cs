@@ -5,6 +5,7 @@ using Player;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+using Waypoints;
 
 namespace Guns
 {
@@ -38,10 +39,12 @@ namespace Guns
             _isPlayer = GetComponent<PlayerMovement>();
             gameObject.layer = 6; // damageable layer
             _lastTimeStamp = Time.time;
-            _playerHurtUIImage = GameObject.Find("UICanvas/PlayerHurt").GetComponent<Image>();
 
             if (_isPlayer)
+            {
                 CurrentHealth = maxHealth;
+                _playerHurtUIImage = GameObject.Find("UICanvas/PlayerHurt").GetComponent<Image>();
+            }
         }
 
         private void Update()
@@ -116,15 +119,16 @@ namespace Guns
                 GameManager.onPlayerKill.Invoke();
             else
             {
-                var enemy = GetComponent<Enemy>();
-                ScoreManager.onScoreUpdate(enemy.GetScoreValue(), true);
+                var enemy = GetComponent<EnemyBehavior>();
+                ScoreManager.onScoreUpdate(enemy.GetScoreValue, true);
+                // VisitorLogEntry.onEnemyDestroyed.Invoke(enemy);
 		
                 // todo : make this all happen with one Action
                 KillCounter.onKillCountUpdate.Invoke();
                 GameManager.onEnemyKill.Invoke();
                 AccuracyManager.onIncreaseCombo.Invoke();
 			
-                var killCountCanvas = Instantiate(enemy.GetKillCountEffect(), transform.position, quaternion.identity);
+                var killCountCanvas = Instantiate(enemy.GetKillCountEffect, transform.position, quaternion.identity);
                 Destroy(killCountCanvas, 1f);
             }
             Destroy(gameObject);
